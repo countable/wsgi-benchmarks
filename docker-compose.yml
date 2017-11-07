@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+
+  web:
+    extends:
+      file: docker-compose.base.yml
+      service: web
+    command: gunicorn app:app -b :8000 -k sync -w 2 --name app --log-file=-
+     
+
+  meinheld:
+    extends:
+      file: docker-compose.base.yml
+      service: web
+    command: gunicorn meinheld_app:app -b :8000 -w 2 --name meinheld_app --log-file=-
+  
+  bjoern:
+    extends:
+      file: docker-compose.base.yml
+      service: web
+    command: gunicorn bjoern_app:app -b :8000 -w 2 --name bjoern_app --log-file=-
+
+  gaiohttp:
+    extends:
+      file: docker-compose.base.yml
+      service: web
+    command: gunicorn app:app -b :8000 -k gaiohttp -w 2 --name gaiohttp_app --log-file=-
+
+  sanic:
+    extends:
+      file: docker-compose.base.yml
+      service: web
+    command: python3 sanic_app.py
+
+  ab:
+    image: jordi/ab
+    command: ab -c 10 -n 5000  http://web:8000/
+    networks:
+      - back-tier
+
+networks:
+  back-tier:
+    driver: bridge
+

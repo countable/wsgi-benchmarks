@@ -1,0 +1,7 @@
+sanic
+Flask==0.10.1
+gunicorn==19.4.5
+meinheld
+bjoern
+pathlib
+aiohttp==1
