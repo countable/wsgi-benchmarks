@@ -16,10 +16,11 @@ You'll need to install Docker and Docker Compose if you haven't.
 
 #### Run
 
+Bring up web server containers.
 
-    $ docker-compose up
+    $ docker-compose up -d
 
-To run individual benchmarks
+To run benchmarks
 
-    $ docker-compose ab
+    $ docker-compose up ab
 

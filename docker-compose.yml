@@ -2,12 +2,11 @@ version: '2'
 
 services:
 
-  web:
+  sync:
     extends:
       file: docker-compose.base.yml
       service: web
     command: gunicorn app:app -b :8000 -k sync -w 2 --name app --log-file=-
-     
 
   meinheld:
     extends:
@@ -35,7 +34,10 @@ services:
 
   ab:
     image: jordi/ab
-    command: ab -c 10 -n 5000  http://web:8000/
+#    command: sleep 100000
+    command: /code/bench.sh
+    volumes:
+      - .:/code/
     networks:
       - back-tier
 
